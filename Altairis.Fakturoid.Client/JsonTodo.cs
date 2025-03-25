@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Altairis.Fakturoid.Client {
+namespace Altairis.Fakturoid.Client.V2 {
 
     /// <summary>
     /// Represents a todo task, as received from JSON API.

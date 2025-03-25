@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace Altairis.Fakturoid.Client {
+namespace Altairis.Fakturoid.Client.V2 {
 
     /// <summary>
     /// Class representing connection to Fakturoid API, holds authentication information etc.

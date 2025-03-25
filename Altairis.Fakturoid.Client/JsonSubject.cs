@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Altairis.Fakturoid.Client {
+namespace Altairis.Fakturoid.Client.V2 {
 
     /// <summary>
     /// Subject (contact), as received from JSON API.

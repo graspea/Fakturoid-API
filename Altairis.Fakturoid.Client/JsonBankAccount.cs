@@ -1,4 +1,4 @@
-﻿namespace Altairis.Fakturoid.Client {
+﻿namespace Altairis.Fakturoid.Client.V2 {
 
     /// <summary>
     /// Bank account information, as received from JSON API.

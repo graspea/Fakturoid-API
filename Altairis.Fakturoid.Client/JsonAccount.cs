@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Altairis.Fakturoid.Client {
+namespace Altairis.Fakturoid.Client.V2 {
 
     /// <summary>
     /// User account information, as received from JSON API.

@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Altairis.Fakturoid.Client {
+namespace Altairis.Fakturoid.Client.V2 {
 
     /// <summary>
     /// The exception representing error returned by Fakturoid API.

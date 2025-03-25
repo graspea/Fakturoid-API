@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Altairis.Fakturoid.Client {
+namespace Altairis.Fakturoid.Client.V2 {
 
     #region Enums
 

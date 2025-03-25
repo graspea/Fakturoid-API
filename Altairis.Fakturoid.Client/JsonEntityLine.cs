@@ -1,4 +1,4 @@
-﻿namespace Altairis.Fakturoid.Client {
+﻿namespace Altairis.Fakturoid.Client.V2 {
     /// <summary>
     /// Represents single line of entity, as received from JSON API.
     /// </summary>
