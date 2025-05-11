@@ -32,7 +32,7 @@ public class FakturoidTodosProxy : FakturoidEntityProxy {
     /// <param name="id">The ID of the todo task to toggle.</param>
     /// <returns>The updated <see cref="FakturoidTodo"/> instance.</returns>
     public async Task<FakturoidTodo> ToggleCompletion(int id) {
-        var c = this.Context.GetHttpClient();
+        var c = await this.Context.GetHttpClientAsync();
         var r = await c.PostAsync($"todos/{id}/toggle_completion.json", null);
         r.EnsureFakturoidSuccess();
         return await r.Content.FakturoidReadAsAsync<FakturoidTodo>();

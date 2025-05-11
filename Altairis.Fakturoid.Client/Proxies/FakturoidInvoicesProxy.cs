@@ -298,7 +298,7 @@ public class FakturoidInvoicesProxy : FakturoidEntityProxy {
     public async Task<byte[]> DownloadPdfAsync(int id) {
         if (id < 1) throw new ArgumentOutOfRangeException(nameof(id), "Value must be greater than zero.");
 
-        var c = this.Context.GetHttpClient();
+        var c = await this.Context.GetHttpClientAsync();
         var r = await c.GetAsync($"invoices/{id}/download.pdf");
         if (r.StatusCode == HttpStatusCode.NoContent) return null; // Return null if no content - client should try again later
         r.EnsureFakturoidSuccess();
@@ -321,7 +321,7 @@ public class FakturoidInvoicesProxy : FakturoidEntityProxy {
         if (invoiceId < 1) throw new ArgumentOutOfRangeException(nameof(invoiceId), "Value must be greater than zero.");
         if (attachmentId < 1) throw new ArgumentOutOfRangeException(nameof(attachmentId), "Value must be greater than zero.");
 
-        var c = this.Context.GetHttpClient();
+        var c = await this.Context.GetHttpClientAsync();
         var r = await c.GetAsync($"invoices/{invoiceId}/attachments/{attachmentId}/download");
         if (r.StatusCode == HttpStatusCode.NoContent) throw new FakturoidException(r);
         r.EnsureFakturoidSuccess();
@@ -336,7 +336,7 @@ public class FakturoidInvoicesProxy : FakturoidEntityProxy {
     public async Task MarkAsSent(int invoiceId) {
         if (invoiceId < 1) throw new ArgumentOutOfRangeException(nameof(invoiceId), "Value must be greater than zero.");
 
-        var c = this.Context.GetHttpClient();
+        var c = await this.Context.GetHttpClientAsync();
         var r = await c.PostAsync($"invoices/{invoiceId}/fire.json?event=mark_as_sent", new StringContent(string.Empty));
         r.EnsureFakturoidSuccess();
     }
@@ -349,7 +349,7 @@ public class FakturoidInvoicesProxy : FakturoidEntityProxy {
     public async Task Cancel(int invoiceId) {
         if (invoiceId < 1) throw new ArgumentOutOfRangeException(nameof(invoiceId), "Value must be greater than zero.");
 
-        var c = this.Context.GetHttpClient();
+        var c = await this.Context.GetHttpClientAsync();
         var r = await c.PostAsync($"invoices/{invoiceId}/fire.json?event=cancel", new StringContent(string.Empty));
         r.EnsureFakturoidSuccess();
     }
@@ -362,7 +362,7 @@ public class FakturoidInvoicesProxy : FakturoidEntityProxy {
     public async Task UndoCancelAsync(int invoiceId) {
         if (invoiceId < 1) throw new ArgumentOutOfRangeException(nameof(invoiceId), "Value must be greater than zero.");
 
-        var c = this.Context.GetHttpClient();
+        var c = await this.Context.GetHttpClientAsync();
         var r = await c.PostAsync($"invoices/{invoiceId}/fire.json?event=undo_cancel", new StringContent(string.Empty));
         r.EnsureFakturoidSuccess();
     }
@@ -375,7 +375,7 @@ public class FakturoidInvoicesProxy : FakturoidEntityProxy {
     public async Task LockAsync(int invoiceId) {
         if (invoiceId < 1) throw new ArgumentOutOfRangeException(nameof(invoiceId), "Value must be greater than zero.");
 
-        var c = this.Context.GetHttpClient();
+        var c = await this.Context.GetHttpClientAsync();
         var r = await c.PostAsync($"invoices/{invoiceId}/fire.json?event=lock", new StringContent(string.Empty));
         r.EnsureFakturoidSuccess();
     }
@@ -388,7 +388,7 @@ public class FakturoidInvoicesProxy : FakturoidEntityProxy {
     public async Task UnlockAsync(int invoiceId) {
         if (invoiceId < 1) throw new ArgumentOutOfRangeException(nameof(invoiceId), "Value must be greater than zero.");
 
-        var c = this.Context.GetHttpClient();
+        var c = await this.Context.GetHttpClientAsync();
         var r = await c.PostAsync($"invoices/{invoiceId}/fire.json?event=unlock", new StringContent(string.Empty));
         r.EnsureFakturoidSuccess();
     }
@@ -401,7 +401,7 @@ public class FakturoidInvoicesProxy : FakturoidEntityProxy {
     public async Task MarkAsUncollectibleAsync(int invoiceId) {
         if (invoiceId < 1) throw new ArgumentOutOfRangeException(nameof(invoiceId), "Value must be greater than zero.");
 
-        var c = this.Context.GetHttpClient();
+        var c = await this.Context.GetHttpClientAsync();
         var r = await c.PostAsync($"invoices/{invoiceId}/fire.json?event=mark_as_uncollectible", new StringContent(string.Empty));
         r.EnsureFakturoidSuccess();
     }
@@ -414,7 +414,7 @@ public class FakturoidInvoicesProxy : FakturoidEntityProxy {
     public async Task UndoUncollectibleAsync(int invoiceId) {
         if (invoiceId < 1) throw new ArgumentOutOfRangeException(nameof(invoiceId), "Value must be greater than zero.");
 
-        var c = this.Context.GetHttpClient();
+        var c = await this.Context.GetHttpClientAsync();
         var r = await c.PostAsync($"invoices/{invoiceId}/fire.json?event=undo_uncollectible", new StringContent(string.Empty));
         r.EnsureFakturoidSuccess();
     }

@@ -109,7 +109,7 @@ public abstract class FakturoidEntityProxy {
         if (string.IsNullOrWhiteSpace(uri)) throw new ArgumentException("Value cannot be empty or whitespace only string.", nameof(uri));
 
         // Get result
-        var c = this.Context.GetHttpClient();
+        var c = await this.Context.GetHttpClientAsync();
         var r = await c.GetAsync(uri);
 
         // Ensure result was successfull
@@ -139,7 +139,7 @@ public abstract class FakturoidEntityProxy {
         if (newEntity == null) throw new ArgumentNullException(nameof(newEntity));
 
         // Create new entity
-        var c = this.Context.GetHttpClient();
+        var c = await this.Context.GetHttpClientAsync();
         var r = await c.FakturoidPostAsJsonAsync(uri, newEntity);
         r.EnsureFakturoidSuccess();
 
@@ -165,7 +165,7 @@ public abstract class FakturoidEntityProxy {
         if (string.IsNullOrWhiteSpace(uri)) throw new ArgumentException("Value cannot be empty or whitespace only string.", nameof(uri));
 
         // Get result
-        var c = this.Context.GetHttpClient();
+        var c = await this.Context.GetHttpClientAsync();
         var r = await c.DeleteAsync(uri);
 
         // Ensure result was successfull
@@ -192,7 +192,7 @@ public abstract class FakturoidEntityProxy {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
 
         // Get result
-        var c = this.Context.GetHttpClient();
+        var c = await this.Context.GetHttpClientAsync();
         var r = await c.FakturoidPatchAsJsonAsync(uri, entity);
 
         // Ensure result was successfull
