@@ -230,37 +230,38 @@ public class FakturoidInvoice {
     /// <summary>
     /// Date and time of sending the document via email.
     /// </summary>
-    public DateTime SentAt { get; set; }
+    public DateTime? SentAt { get; set; }
 
     /// <summary>
     /// Date when the document was marked as paid.
     /// </summary>
-    public DateTime PaidOn { get; set; }
+    public DateTime? PaidOn { get; set; }
 
     /// <summary>
     /// Date and time of sending a reminder.
     /// </summary>
-    public DateTime ReminderSentAt { get; set; }
+    public DateTime? ReminderSentAt { get; set; }
 
     /// <summary>
     /// Date and time when the invoice was cancelled (only for non-VAT-payers).
     /// </summary>
-    public DateTime CancelledAt { get; set; }
+    
+    public DateTime? CancelledAt { get; set; }
 
     /// <summary>
     /// Date and time when an invoice was marked as uncollectible.
     /// </summary>
-    public DateTime UncollectibleAt { get; set; }
+    public DateTime? UncollectibleAt { get; set; }
 
     /// <summary>
     /// Date and time when the document was locked.
     /// </summary>
-    public DateTime LockedAt { get; set; }
+    public DateTime? LockedAt { get; set; }
 
     /// <summary>
     /// Date when the client visited the webinvoice.
     /// </summary>
-    public DateTime WebinvoiceSeenOn { get; set; }
+    public DateTime? WebinvoiceSeenOn { get; set; }
 
     /// <summary>
     /// Text before lines.
