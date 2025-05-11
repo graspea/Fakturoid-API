@@ -1,23 +1,24 @@
-﻿using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
-using System.Text;
+﻿using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Altairis.Fakturoid.Client;
 
 internal static class FakturoidExtensionMethods {
-    private static readonly JsonSerializerSettings JSON_SETTINGS = new() {
-        NullValueHandling = NullValueHandling.Ignore,
-        ContractResolver = new DefaultContractResolver { NamingStrategy = new SnakeCaseNamingStrategy() } 
+    private static readonly JsonSerializerOptions JSON_SETTINGS = new() {
+        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        NumberHandling = JsonNumberHandling.AllowReadingFromString
     };
 
     public static Task<HttpResponseMessage> FakturoidPostAsJsonAsync<T>(this HttpClient client, string requestUri, T value) {
-        var json = JsonConvert.SerializeObject(value, JSON_SETTINGS);
+        var json = JsonSerializer.Serialize(value, JSON_SETTINGS);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
         return client.PostAsync(requestUri, content);
     }
 
     public static Task<HttpResponseMessage> FakturoidPatchAsJsonAsync<T>(this HttpClient client, string requestUri, T value) {
-        var json = JsonConvert.SerializeObject(value, JSON_SETTINGS);
+        var json = JsonSerializer.Serialize(value, JSON_SETTINGS);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
         var request = new HttpRequestMessage(new HttpMethod("PATCH"), requestUri) { Content = content };
         return client.SendAsync(request);
@@ -25,7 +26,7 @@ internal static class FakturoidExtensionMethods {
 
     public static async Task<T> FakturoidReadAsAsync<T>(this HttpContent content) {
         var json = await content.ReadAsStringAsync();
-        return JsonConvert.DeserializeObject<T>(json, JSON_SETTINGS);
+        return JsonSerializer.Deserialize<T>(json, JSON_SETTINGS);
     }
     public static void EnsureFakturoidSuccess(this HttpResponseMessage r) {
         if (r == null) throw new ArgumentNullException(nameof(r));
