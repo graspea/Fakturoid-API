@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Xml;
 
 namespace Altairis.Fakturoid.Client.Proxies;
@@ -112,7 +113,7 @@ public abstract class FakturoidEntityProxy {
         var c = await this.Context.GetHttpClientAsync();
         var r = await c.GetAsync(uri);
 
-        // Ensure result was successfull
+        // Ensure result was successful
         r.EnsureFakturoidSuccess();
 
         // Parse and return result
@@ -143,14 +144,22 @@ public abstract class FakturoidEntityProxy {
         var r = await c.FakturoidPostAsJsonAsync(uri, newEntity);
         r.EnsureFakturoidSuccess();
 
-        // Extract ID from URI
+        // Extract ID from URI or body
         try {
-            var idString = r.Headers.Location.ToString();
-            if (idString.EndsWith(".json", StringComparison.OrdinalIgnoreCase)) idString = idString.Substring(0, idString.Length - 5); // remove .json extension
-            idString = idString.Substring(idString.LastIndexOf('/') + 1); // last path component should now be numeric ID
-            return int.Parse(idString);
+            if(r.Headers.Location is not null) {
+                var idString = r.Headers.Location.ToString();
+                if (idString.EndsWith(".json", StringComparison.OrdinalIgnoreCase)) idString = idString.Substring(0, idString.Length - 5); // remove .json extension
+                idString = idString.Substring(idString.LastIndexOf('/') + 1); // last path component should now be numeric ID
+                return int.Parse(idString);
+            }
+            
+            var body = await r.Content.ReadAsStringAsync();
+            
+            if(string.IsNullOrWhiteSpace(body)) throw new FormatException("Unable to resolve.");
+            
+            return (await JsonNode.ParseAsync(await r.Content.ReadAsStreamAsync()))?["id"]?.GetValue<int>() ?? throw new ArgumentNullException("Missing ID");
         } catch (Exception) {
-            throw new FormatException(string.Format("Unexpected format of new entity URI. Expected format 'scheme://anystring/123456.json', got '{0}' instead.", r.Headers.Location));
+            throw new FormatException(string.Format("Unexpected format of new entity URI. Expected format 'scheme://anystring/123456.json', got '{0}' instead. Or body without entity id", r.Headers.Location));
         }
     }
 
@@ -168,7 +177,7 @@ public abstract class FakturoidEntityProxy {
         var c = await this.Context.GetHttpClientAsync();
         var r = await c.DeleteAsync(uri);
 
-        // Ensure result was successfull
+        // Ensure result was successful
         r.EnsureFakturoidSuccess();
     }
 
@@ -195,7 +204,7 @@ public abstract class FakturoidEntityProxy {
         var c = await this.Context.GetHttpClientAsync();
         var r = await c.FakturoidPatchAsJsonAsync(uri, entity);
 
-        // Ensure result was successfull
+        // Ensure result was successful
         r.EnsureFakturoidSuccess();
 
         // Return updated entity
