@@ -184,12 +184,12 @@ public class FakturoidInvoice {
     /// <summary>
     /// Enable PayPal payment button on invoice.
     /// </summary>
-    public bool Paypal { get; set; }
+    public bool? Paypal { get; set; }
 
     /// <summary>
     /// Enable GoPay payment button on invoice.
     /// </summary>
-    public bool Gopay { get; set; }
+    public bool? Gopay { get; set; }
 
     /// <summary>
     /// Token string for the webinvoice URL.
@@ -312,7 +312,7 @@ public class FakturoidInvoice {
     /// <summary>
     /// Show „Do not pay, …“ on document webinvoice and PDF.
     /// </summary>
-    public bool ShowAlreadyPaidNoteInPdf { get; set; }
+    public bool? ShowAlreadyPaidNoteInPdf { get; set; }
 
     /// <summary>
     /// Payment method.
@@ -328,7 +328,7 @@ public class FakturoidInvoice {
     /// <summary>
     /// Hide bank account on webinvoice and PDF.
     /// </summary>
-    public bool HideBankAccount { get; set; }
+    public bool? HideBankAccount { get; set; }
 
     /// <summary>
     /// Currency ISO code.
@@ -371,7 +371,7 @@ public class FakturoidInvoice {
     /// <summary>
     /// Round total amount (VAT included).
     /// </summary>
-    public bool RoundTotal { get; set; }
+    public bool? RoundTotal { get; set; }
 
     /// <summary>
     /// Total without VAT.
